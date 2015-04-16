@@ -1,3 +1,5 @@
+//  Build a simple dynamic site with node.js  via teamtreehouse.
+
 var Profile = require("./profile.js");
 var renderer = require("./renderer.js");
 var commonHeaders = {'Content-Type': 'text/html'};
@@ -5,12 +7,23 @@ var commonHeaders = {'Content-Type': 'text/html'};
 
 function home(req ,res){
     if(req.url === "/") {
-        //show search
-        res.writeHead(200, commonHeaders);
-        renderer.view('header', {}, res);
-        renderer.view('search', {}, res);
-        renderer.view('footer', {}, res);
-        res.end();
+        if(req.method.toLocaleLowerCase() === 'get') {
+            //show search
+            res.writeHead(200, commonHeaders);
+            renderer.view('header', {}, res);
+            renderer.view('search', {}, res);
+            renderer.view('footer', {}, res);
+            res.end();
+        }else {
+            // if url === '/' && post
+
+            //get the post data from body
+            req.on('data', function(postBody){
+                console.log(postBody.toString());
+            })
+            //extract the username
+            //redirect to /username.
+        }
     }
 }
 //3. handle http route Get /:username
