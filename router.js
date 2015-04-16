@@ -2,7 +2,10 @@
 
 var Profile = require("./profile.js");
 var renderer = require("./renderer.js");
+var querystring = require('querystring');
+
 var commonHeaders = {'Content-Type': 'text/html'};
+
 
 
 function home(req ,res){
@@ -19,10 +22,13 @@ function home(req ,res){
 
             //get the post data from body
             req.on('data', function(postBody){
-                console.log(postBody.toString());
+                //extract the username
+                var query = querystring.parse(postBody.toString());
+                res.writeHead(303, {'Location': '/' + query.username });
+                res.end();
+                //redirect to /username.
             })
-            //extract the username
-            //redirect to /username.
+
         }
     }
 }
